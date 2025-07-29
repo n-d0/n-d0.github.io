@@ -4,8 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World</title>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <div class="main-container">
+        <img src="images/logo.png" alt="carambar logo" width="500px">
+        <h1>Voici une bonne blague</h1>
+        <div id="jokeContainer">
+            <p>Quelle est la femelle du hamster ?</p>
+            <p>L’Amsterdam</p>
+        </div>
+        <button id="refreshJokeButton">Une nouvelle blague !</button>
+    </div>
+    <script>
+    document
+        .getElementById('refreshJokeButton')
+        .addEventListener('click', async function() {
+            try {
+                const response = await fetch('https://simplon-carambar.onrender.com/api/jokes/random');
+                const joke = await response.json();
+                document.getElementById('jokeContainer').innerHTML = `
+                    <p>${joke.question}</p>
+                    <p>${joke.answer}</p>
+                `;
+            } catch (error) {
+                document.getElementById('jokeContainer').innerHTML = error;
+            }
+            });
+    </script>
 </body>
 </html>
